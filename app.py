@@ -164,7 +164,7 @@ df_nil        = load_sheet_tab("NIL_Payroll")
 df_roster     = load_sheet_tab("Roster_Ledger")
 df_schedule   = load_sheet_tab("Team_Schedule")
 df_team_stats = load_sheet_tab("Team_Stats")
-df_game_logs  = load_sheet_tab("Raw_Game_Logs") # Added Game Logs Data
+df_game_logs  = load_sheet_tab("Raw_Game_Logs")
 
 # Load stat tables
 df_pass       = load_sheet_tab("Passing_Stats")
@@ -458,12 +458,18 @@ with tab_coach:
                 ts_team_col = find_col(df_team_stats, "teamName") or find_col(df_team_stats, "team")
                 ts_year_col = find_col(df_team_stats, "seasonIndex") or find_col(df_team_stats, "year")
                 
-                # Filter down matching team rows dynamically by BOTH Year and exact Team string
                 filtered_stats = df_team_stats
-                if ts_team_col and ts_year_col:
+                
+                # Decoupled filtering: Apply Team filter if team column exists
+                if ts_team_col:
                     filtered_stats = filtered_stats[
-                        (filtered_stats[ts_year_col] == selected_year) & 
-                        (filtered_stats[ts_team_col].astype(str).str.upper().str.strip() == team.upper().strip())
+                        filtered_stats[ts_team_col].astype(str).str.upper().str.strip() == team.upper().strip()
+                    ]
+                
+                # Apply Year filter ONLY if a year column actually exists in the sheet
+                if ts_year_col:
+                    filtered_stats = filtered_stats[
+                        filtered_stats[ts_year_col] == selected_year
                     ]
                 
                 if not filtered_stats.empty:
@@ -562,15 +568,25 @@ with tab_coach:
                 ts_year_col = find_col(df_team_stats, "seasonIndex") or find_col(df_team_stats, "year")
                 
                 filtered_stats = df_team_stats
-                if ts_team_col and ts_year_col:
-                    filtered_stats = df_team_stats[
-                        (df_team_stats[ts_year_col] == selected_year) & 
-                        (df_team_stats[ts_team_col].astype(str).str.upper().str.strip() == team.upper().strip())
+                
+                # Decoupled filtering: Apply Team filter if team column exists
+                if ts_team_col:
+                    filtered_stats = filtered_stats[
+                        filtered_stats[ts_team_col].astype(str).str.upper().str.strip() == team.upper().strip()
+                    ]
+                
+                # Apply Year filter ONLY if a year column actually exists in the sheet
+                if ts_year_col:
+                    filtered_stats = filtered_stats[
+                        filtered_stats[ts_year_col] == selected_year
                     ]
                 
                 if not filtered_stats.empty:
                     # Clean up visual dataframe
-                    clean_display_df = filtered_stats.drop(columns=[ts_year_col], errors='ignore')
+                    clean_display_df = filtered_stats.copy()
+                    if ts_year_col:
+                        clean_display_df = clean_display_df.drop(columns=[ts_year_col], errors='ignore')
+                        
                     st.dataframe(clean_display_df, use_container_width=True, hide_index=True)
                 else:
                     st.info(f"No entry found in Team_Stats tab for {team} during the {selected_year} season.")
