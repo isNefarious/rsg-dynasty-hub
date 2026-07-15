@@ -581,7 +581,7 @@ with tab_coach:
                     giveaways = int(filtered_stats[find_col(df_team_stats, "tOGiveAways")].sum()) if find_col(df_team_stats, "tOGiveAways") else 0
 
             with details_l:
-                st.markdown("### 🛠️ Coaches Scheme")
+                st.markdown("### Coaches Scheme")
                 scheme_html = (
                     '<div class="sports-card" style="border-left-color: #2563eb;">'
                     '<table style="width:100%; border:none; background:none;">'
@@ -592,7 +592,7 @@ with tab_coach:
                 st.markdown(scheme_html, unsafe_allow_html=True)
 
             with details_r:
-                st.markdown("### 🏟️ Recent Game")
+                st.markdown("### Recent Game")
                 if not df_game_logs.empty:
                     gl_team_col = find_col(df_game_logs, "teamName") or find_col(df_game_logs, "team")
                     gl_year_col = find_col(df_game_logs, "seasonIndex") or find_col(df_game_logs, "year")
@@ -884,7 +884,7 @@ with tab_stats:
 with tab_media:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
-    top_25_url = get_custom_logo("CFB PLAYOFF")
+    top_25_url = get_custom_logo("TOP 25")
     
     with col1:
       if top_25_url:
@@ -924,7 +924,7 @@ with tab_media:
             st.info("Top 25 sheet data is awaiting entries.")
 
     with col2:
-        st.markdown(f"### 🏆 {selected_year} Heisman")
+        st.markdown(f"### {selected_year} Heisman")
         year_col = find_col(df_heisman, "year")
         if not df_heisman.empty and year_col:
             year_heisman = df_heisman[df_heisman[year_col] == selected_year]
@@ -955,7 +955,7 @@ with tab_media:
     col3, col4 = st.columns(2)
     
     with col3:
-        st.markdown("### 🏆 National Championship History")
+        st.markdown("### National Championship History")
         if not df_nat_champ.empty:
             n_year_col = find_col(df_nat_champ, "year")
             if n_year_col:
@@ -982,7 +982,7 @@ with tab_media:
             st.info("No National Championship history.")
 
     with col4:
-        st.markdown("### 🏅 Conference Championship History")
+        st.markdown("### Conference Championship History")
         if not df_conf_champ.empty:
             c_year_col = find_col(df_conf_champ, "year")
             if c_year_col:
@@ -1012,7 +1012,7 @@ with tab_media:
 # TAB 6: 📊 CONFERENCE STANDINGS
 # ==========================================
 with tab_standings:
-    st.markdown("### 🏛️ Conference Standings")
+    st.markdown("### Conference Standings")
     year_col = find_col(df_standings, "year")
     conf_col = find_col(df_standings, "conference")
     rank_col = find_col(df_standings, "rank")
@@ -1067,7 +1067,16 @@ with tab_standings:
 # TAB 7: 🏆 PLAYOFF BRACKET
 # ==========================================
 with tab_bracket:
-    st.markdown(f"### <img src='{CFP_LOGO}' width='45' style='vertical-align:bottom; margin-right:8px;'> CFB Playoff Bracket", unsafe_allow_html=True)
+cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
+    
+      if cfb_playoff_url:
+        st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
+                <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
+                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 32px; line-height: 1.1;'>
+                    College Football Playoffs
+                </h1>
+            </div>
+        """, unsafe_allow_html=True)
     
     if not df_bracket.empty:
         year_bracket = df_bracket[df_bracket[find_col(df_bracket, "year")] == selected_year]
