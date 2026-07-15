@@ -3,12 +3,36 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
+def get_custom_logo(cust_name):
+   
+    if not cust_name:
+        return None
+        
+    cust_clean = str(cust_name).strip().upper()
+    github_base = "https://raw.githubusercontent.com/isNefarious/rsg-dynasty-hub/refs/heads/main"
+    
+    custom_map = {
+        "RSG LOGO": f"{github_base}/GitHub%20Logos/a30ca7d1-5947-4437-ac96-52d6542a0833_removalai_preview.png",
+        "THE CLIMB": f"{github_base}/GitHub%20Logos/00259288-e703-4ded-b79f-1d89ab2c723c_removalai_preview.png",
+        "HEISMAN": f"{github_base}/GitHub%20Logos/a77b14b9-d25b-4a84-969a-319534f2a528_removalai_preview.png",
+        "CFB PLAYOFF": f"{github_base}/GitHub%20Logos/2bbac82c-a1c8-465e-85eb-7cbbd8c52535_removalai_preview.png",
+        "CFB GAMEDAY": f"{github_base}/GitHub%20Logos/4d499754-2d5a-4fc3-a1a6-eb3135236e44_removalai_preview.png",
+        "TOP 25": f"{github_base}/GitHub%20Logos/96e6e54f-e331-43d5-8463-c1d794fd2604_removalai_preview.png",
+        "CFB LOGO": f"{github_base}/GitHub%20Logos/afe183fd-aa15-40fc-a1be-edfe41ecd483_removalai_preview.png",
+        "EA CFB": f"{github_base}/GitHub%20Logos/c1743886-865f-400a-bf8b-75cdaae0df9f_removalai_preview.png",
+    }
+    
+    return custom_map.get(cust_clean, None)
+
+
 # ==========================================
 # 1. APP INITIALIZATION & THEME INJECTION
 # ==========================================
+"RSG = get_custom_logo("RSG LOGO")
+
 st.set_page_config(
     page_title="RSG Dynasty Hub",
-    page_icon="🏈",
+    page_icon="RSG",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -178,22 +202,6 @@ df_def        = load_sheet_tab("Defense_Stats")
 df_bracket    = load_sheet_tab("CFB_Playoff_Bracket")
 if df_bracket.empty:
     df_bracket = load_sheet_tab("CFB Playoff Bracket")
-
-# ==========================================
-# CUSTOM LOGO ASSET LIBRARY
-# ==========================================
-
-# Paste your direct Discord/Imgur/GitHub link here!
-RSG_LOGO_URL = "https://imgur.com/a/InM9HT8"
-
-CFP_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Logo_of_college_football_playoff.svg/500px-Logo_of_college_football_playoff.svg.png"
-
-NCAA_CFB_LOGO = "https://a.espncdn.com/i/teamlogos/leagues/500/ncaa.png"
-
-GAMEDAY_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/College_GameDay_logo.svg/500px-College_GameDay_logo.svg.png"
-
-# Base EA Sports CFB text logo (cleanest option since the "27" specific graphic is best hosted via your own GitHub if you want the exact box art)
-EA_SPORTS_CFB_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/EA_Sports_College_Football_25_logo.png/545px-EA_Sports_College_Football_25_logo.png"
 
 # ==========================================
 # 3. COMPLETE NCAA LOGO ATLAS LOOKUP SERVICE
