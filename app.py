@@ -853,7 +853,7 @@ with tab_team:
 # ==========================================
 # TAB 4: 🏈 LEAGUE STATS
 # ==========================================
-with tab_league_stats:
+with tab_stats:
     st.markdown("### Player Stats")
     stat_type = st.radio("Select Stat Category", ["Passing", "Rushing", "Receiving", "Defense"], horizontal=True)
     
