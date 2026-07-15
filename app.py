@@ -978,7 +978,7 @@ with tab_media:
                     )
                 nc_html += '</table></div>'
                 st.markdown(nc_html, unsafe_allow_html=True)
-      else:
+        else:
             st.info("No National Championship history.")
 
     with col4:
