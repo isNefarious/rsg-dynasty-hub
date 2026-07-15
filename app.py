@@ -165,6 +165,8 @@ df_roster     = load_sheet_tab("Roster_Ledger")
 df_schedule   = load_sheet_tab("Team_Schedule")
 df_team_stats = load_sheet_tab("Team_Stats")
 df_game_logs  = load_sheet_tab("Raw_Game_Logs")
+df_nat_champ  = load_sheet_tab("National_Championships") 
+df_conf_champ = load_sheet_tab("Conference_Championships") 
 
 # Load stat tables
 df_pass       = load_sheet_tab("Passing_Stats")
@@ -851,6 +853,79 @@ with tab_media:
         else:
             st.info("Heisman history tab is awaiting entries.")
 
+    # --- NEW UNFILTERED CHAMPIONSHIP HISTORY SECTION ---
+    st.markdown("<br><hr style='border-color:#2d3748;'><br>", unsafe_allow_html=True)
+    
+    col_nat_champ, col_conf_champ = st.columns(2)
+    
+    with col_nat_champ:
+        st.markdown("### 🏆 National Championship History")
+        if not df_nat_champ.empty:
+            n_year_col = find_col(df_nat_champ, "year")
+            if n_year_col:
+                # Deliberately NOT filtering by selected_year
+                hist_nc = df_nat_champ.sort_values(by=n_year_col, ascending=False)
+                
+                nc_html = '<div style="max-height:600px; overflow-y:auto; padding-right:8px;"><table class="clean-table" style="font-size:13px;">'
+                nc_html += '<tr><th style="width:10%;">Year</th><th style="width:40%;">Champion</th><th style="width:20%;">Result</th><th style="width:30%;">Runner-Up</th></tr>'
+                
+                for _, row in hist_nc.iterrows():
+                    yr = get_val(row, "year", "")
+                    champ = str(get_val(row, "champion", ""))
+                    opp = str(get_val(row, "opponent", ""))
+                    res = get_val(row, "result", "")
+                    
+                    champ_logo = get_team_logo(champ)
+                    opp_logo = get_team_logo(opp)
+                    
+                    nc_html += (
+                        '<tr>'
+                        f'<td><b>{yr}</b></td>'
+                        f'<td style="font-weight:900; color:#34d399;"><img src="{champ_logo}" width="24" style="vertical-align:middle; margin-right:8px;">{champ}</td>'
+                        f'<td style="font-weight:bold;">{res}</td>'
+                        f'<td style="color:#9ca3af;"><img src="{opp_logo}" width="20" style="vertical-align:middle; margin-right:6px; filter:grayscale(80%); opacity:0.8;">{opp}</td>'
+                        '</tr>'
+                    )
+                nc_html += '</table></div>'
+                st.markdown(nc_html, unsafe_allow_html=True)
+        else:
+            st.info("National Championship history data is empty.")
+            
+    with col_conf_champ:
+        st.markdown("### 🏅 Conference Championship History")
+        if not df_conf_champ.empty:
+            c_year_col = find_col(df_conf_champ, "year")
+            if c_year_col:
+                # Deliberately NOT filtering by selected_year
+                hist_cc = df_conf_champ.sort_values(by=c_year_col, ascending=False)
+                
+                cc_html = '<div style="max-height:600px; overflow-y:auto; padding-right:8px;"><table class="clean-table" style="font-size:13px;">'
+                cc_html += '<tr><th style="width:10%;">Year</th><th style="width:15%;">Conf</th><th style="width:35%;">Champion</th><th style="width:15%;">Result</th><th style="width:25%;">Runner-Up</th></tr>'
+                
+                for _, row in hist_cc.iterrows():
+                    yr = get_val(row, "year", "")
+                    conf = str(get_val(row, "conference", "")).upper()
+                    champ = str(get_val(row, "champion", ""))
+                    opp = str(get_val(row, "opponent", ""))
+                    res = get_val(row, "result", "")
+                    
+                    champ_logo = get_team_logo(champ)
+                    opp_logo = get_team_logo(opp)
+                    
+                    cc_html += (
+                        '<tr>'
+                        f'<td><b>{yr}</b></td>'
+                        f'<td style="color:#d97706; font-weight:800;">{conf}</td>'
+                        f'<td style="font-weight:bold; color:white;"><img src="{champ_logo}" width="20" style="vertical-align:middle; margin-right:6px;">{champ}</td>'
+                        f'<td style="font-weight:bold;">{res}</td>'
+                        f'<td style="color:#9ca3af;"><img src="{opp_logo}" width="16" style="vertical-align:middle; margin-right:6px; filter:grayscale(80%); opacity:0.8;">{opp}</td>'
+                        '</tr>'
+                    )
+                cc_html += '</table></div>'
+                st.markdown(cc_html, unsafe_allow_html=True)
+        else:
+            st.info("Conference Championship history data is empty.")
+            
 # ==========================================
 # TAB 6: 📊 CONFERENCE STANDINGS
 # ==========================================
