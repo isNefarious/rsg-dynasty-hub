@@ -16,7 +16,7 @@ st.set_page_config(
 st.markdown("""
     <style>
         .stApp {
-            background-color: #0b0f14;
+            background: linear-gradient(135deg, #0b0f14 0%, #111827 100%);
             color: #f1f3f5;
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
@@ -180,6 +180,22 @@ if df_bracket.empty:
     df_bracket = load_sheet_tab("CFB Playoff Bracket")
 
 # ==========================================
+# CUSTOM LOGO ASSET LIBRARY
+# ==========================================
+
+# Paste your direct Discord/Imgur/GitHub link here!
+RSG_LOGO_URL = "https://imgur.com/a/InM9HT8"
+
+CFP_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Logo_of_college_football_playoff.svg/500px-Logo_of_college_football_playoff.svg.png"
+
+NCAA_CFB_LOGO = "https://a.espncdn.com/i/teamlogos/leagues/500/ncaa.png"
+
+GAMEDAY_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/College_GameDay_logo.svg/500px-College_GameDay_logo.svg.png"
+
+# Base EA Sports CFB text logo (cleanest option since the "27" specific graphic is best hosted via your own GitHub if you want the exact box art)
+EA_SPORTS_CFB_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/EA_Sports_College_Football_25_logo.png/545px-EA_Sports_College_Football_25_logo.png"
+
+# ==========================================
 # 3. COMPLETE NCAA LOGO ATLAS LOOKUP SERVICE
 # ==========================================
 def get_team_logo(team_name):
@@ -260,6 +276,51 @@ def get_team_logo(team_name):
          
     return "https://a.espncdn.com/i/teamlogos/default-team-logo-500.png"
 
+def get_conf_logo(conf_name):
+    """
+    Returns the logo URL for a college football conference.
+    Supports direct URLs (GitHub, Imgur) or standard web assets.
+    """
+    if not conf_name:
+        return "https://a.espncdn.com/i/teamlogos/leagues/500/ncaa.png"
+        
+    conf_clean = str(conf_name).strip().upper()
+    
+    # Map your conference names to their logo URLs
+    # You can use direct web links or assets hosted in your GitHub repo!
+    conf_map = {
+        "ACC": "https://a.espncdn.com/i/leagueslogos/college-football/500/acc.png",
+        "SEC": "https://a.espncdn.com/i/leagueslogos/college-football/500/sec.png",
+        "BIG 12": "https://a.espncdn.com/i/leagueslogos/college-football/500/big12.png",
+        "BIG-12": "https://a.espncdn.com/i/leagueslogos/college-football/500/big12.png",
+        "BIG TEN": "https://a.espncdn.com/i/leagueslogos/college-football/500/b10.png",
+        "BIG-10": "https://a.espncdn.com/i/leagueslogos/college-football/500/b10.png",
+        "MAC": "https://a.espncdn.com/i/leagueslogos/college-football/500/mac.png",
+        "MWC": "https://a.espncdn.com/i/leagueslogos/college-football/500/mwc.png",
+        "CUSA": "https://a.espncdn.com/i/leagueslogos/college-football/500/cusa.png",
+        "C-USA": "https://a.espncdn.com/i/leagueslogos/college-football/500/cusa.png",
+        "AMERICAN": "https://a.espncdn.com/i/leagueslogos/college-football/500/aac.png",
+        "AAC": "https://a.espncdn.com/i/leagueslogos/college-football/500/aac.png",
+        "SUN BELT": "https://a.espncdn.com/i/leagueslogos/college-football/500/sunbelt.png",
+        "PAC-12": "https://a.espncdn.com/i/leagueslogos/college-football/500/pac12.png",
+        "PAC12": "https://a.espncdn.com/i/leagueslogos/college-football/500/pac12.png",
+        
+        # Custom hosted league conference example:
+        # "KINETIC CONF": "https://raw.githubusercontent.com/YourUsername/YourRepo/main/logos/kinetic_conf.png"
+    }
+    
+    # Exact Match
+    if conf_clean in conf_map:
+        return conf_map[conf_clean]
+        
+    # Fallback Partial Match
+    for key, url in conf_map.items():
+        if key in conf_clean or conf_clean in key:
+            return url
+            
+    # Default fallback if no match found
+    return "https://a.espncdn.com/i/teamlogos/leagues/500/ncaa.png"
+
 def get_avatar(name):
     return f"https://api.dicebear.com/7.x/initials/svg?seed={name}&backgroundColor=991b1b,141a22,1e3a8a&radius=50"
 
@@ -276,28 +337,31 @@ all_years = sorted(list(years_found), reverse=True) if years_found else [2026]
 
 head_l, head_r = st.columns([8, 4])
 with head_l:
-    st.markdown("<h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px;'>🏈 RSG DYNASTY HUB</h1><p style='color:#9ca3af; margin-top:2px; font-size:15px;'>Automated Team Ledger & Coaching Registry</p>", unsafe_allow_html=True)
+    st.markdown("""
+        <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px;'>RSG DYNASTY HUB</h1>
+        <p style='color:#9ca3af; margin-top:2px; font-size:15px; font-weight:bold;'>The Climbs Signature App</p>
+    """, unsafe_allow_html=True)
 with head_r:
-    selected_year = st.selectbox("📅 TIMELINE SEASON FILTER", options=all_years)
+    selected_year = st.selectbox("📅 SELECT A SEASON", options=all_years)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Define Main Tabs
 tab_dynasty, tab_coach, tab_team, tab_stats, tab_media, tab_standings, tab_bracket = st.tabs([
-    "🏠 DYNASTY SCORES",
-    "👔 COACHING PORTAL",
-    "🛡️ TEAM OFFICE Hub",
-    "🏈 PLAYER STATS",
-    "📺 MEDIA CENTER", 
-    "📊 STANDINGS", 
-    "🏆 BRACKET"
+    "🏠 THE CLIMB DYNASTY SCORES",
+    "👔 COACH PORTAL",
+    "🛡️ TEAM OFFICE",
+    "🏈 LEAGUE STATS",
+    "📺 AROUND THE LEAGUE", 
+    "📊 CONFERENCE STANDINGS", 
+    "🏆 CFB PLAYOFF BRACKET"
 ])
 
 # ==========================================
-# TAB 1: 🏠 DYNASTY SCORE LEADERBOARD
+# TAB 1: 🏠 THE CLIMB DYNASTY SCORE LEADERBOARD
 # ==========================================
 with tab_dynasty:
-    st.markdown("### 🏆 All-Time Career Dynasty Scores")
+    st.markdown("### 🏆 Overall Dynasty Scores")
     st.markdown("The definitive overall ranking of coaches throughout the entire journey.")
      
     if not df_current_season.empty:
@@ -337,7 +401,7 @@ with tab_dynasty:
              
     st.markdown("<br><hr style='border-color:#2d3748;'><br>", unsafe_allow_html=True)
 
-    st.markdown(f"### 📅 {selected_year} Season Log")
+    st.markdown(f"### 📅 {selected_year} Dynasty Score")
     st.markdown("Track the prestige climb and performance for the currently selected season.")
      
     year_col = find_col(df_dynasty, "year")
@@ -392,7 +456,7 @@ with tab_coach:
          
         if coach_col and not coach_df_year.empty:
             coach_options = sorted(list(coach_df_year[coach_col].dropna().unique()))
-            selected_coach = st.selectbox("👔 SELECT HEAD COACH PROFILE", options=coach_options, key="coach_sel")
+            selected_coach = st.selectbox("👔 SELECT HEAD COACH", options=coach_options, key="coach_sel")
              
             coach_profile = coach_df_year[coach_df_year[coach_col] == selected_coach].iloc[0]
              
@@ -404,6 +468,7 @@ with tab_coach:
             level = get_val(coach_profile, 'level', 0)
             arch = str(get_val(coach_profile, 'archetype', 'COACH')).upper()
             alma = get_val(coach_profile, 'almamater', 'TBD')
+            alma_logo_url = get_team_logo(alma)
             logo_url = get_team_logo(team)
             avatar_url = get_avatar(coach_name)
              
@@ -421,7 +486,7 @@ with tab_coach:
                 st.markdown(prof_html, unsafe_allow_html=True)
                  
             st.markdown("<br>", unsafe_allow_html=True)
-            m_col1, m_col2, m_col3, m_col4, m_col5 = st.columns(5)
+            m_col1, m_col2, m_col3, m_col4, m_col5, m_col6, m_col7 = st.columns(7)
              
             c_wins = get_val(coach_profile, 'career_wins', 0)
             c_losses = get_val(coach_profile, 'career_losses', 0)
@@ -430,6 +495,8 @@ with tab_coach:
             p_wins = get_val(coach_profile, 'playoffwins', 0)
             p_losses = get_val(coach_profile, 'playofflosses', 0)
             prestige = get_val(coach_profile, 'prestige', 'C')
+            draft = get_val(coach_profile, "draft", 0)
+            t5rec = get_val(coach_profile, "t5rec", 0)
              
             with m_col1:
                 st.markdown(f"<div class='stat-box'><p class='stat-val'>{c_wins}-{c_losses}</p><p class='stat-lbl'>Career Record</p></div>", unsafe_allow_html=True)
@@ -441,7 +508,11 @@ with tab_coach:
                 st.markdown(f"<div class='stat-box'><p class='stat-val'>{p_wins}-{p_losses}</p><p class='stat-lbl'>Playoff W-L</p></div>", unsafe_allow_html=True)
             with m_col5:
                 st.markdown(f"<div class='stat-box'><p class='stat-val' style='color:#34d399;'>{prestige}</p><p class='stat-lbl'>Coach Grade</p></div>", unsafe_allow_html=True)
-
+            with m_col6:
+                st.markdown(f"<div class='stat-box'><p class='stat-val'>{draft}</p><p class='stat-lbl'>Draft Picks</p></div>", unsafe_allow_html=True)
+            with m_col7:
+                st.markdown(f"<div class='stat-box'><p class='stat-val'>{t5rec}</p><p class='stat-lbl'>Top 5 Recruiting Classes</p></div>", unsafe_allow_html=True)
+    
             st.markdown("<br>", unsafe_allow_html=True)
             
             # --- TACTICS & LATEST GAME BOX SCORE SECTION ---
@@ -449,8 +520,6 @@ with tab_coach:
              
             off_scheme = fix_sheet_format(get_val(coach_profile, "offscheme", "TBD"), is_scheme=False)
             def_scheme = fix_sheet_format(get_val(coach_profile, "defscheme", "TBD"), is_scheme=True)
-            draft = get_val(coach_profile, "draft", 0)
-            t5rec = get_val(coach_profile, "t5rec", 0)
             
             # Aggregate dynamic values from Team_Stats sheet tab
             total_off_yds, total_pass_yds, total_rush_yds, total_pass_tds, total_rush_tds = 0, 0, 0, 0, 0
@@ -489,20 +558,18 @@ with tab_coach:
                     giveaways = int(filtered_stats[find_col(df_team_stats, "tOGiveAways")].sum()) if find_col(df_team_stats, "tOGiveAways") else 0
 
             with details_l:
-                st.markdown("### 🛠️ Tactical Scheme Data")
+                st.markdown("### 🛠️ Coaches Scheme")
                 scheme_html = (
                     '<div class="sports-card" style="border-left-color: #2563eb;">'
                     '<table style="width:100%; border:none; background:none;">'
                     f'<tr style="border:none; background:none;"><td style="padding:6px; font-weight:bold; color:#9ca3af; border:none;">OFFENSIVE PLAYBOOK:</td><td style="padding:6px; font-weight:bold; text-align:right; border:none; color:white;">{off_scheme}</td></tr>'
                     f'<tr style="border:none; background:none;"><td style="padding:6px; font-weight:bold; color:#9ca3af; border:none;">DEFENSIVE SCHEME:</td><td style="padding:6px; font-weight:bold; text-align:right; border:none; color:white;">{def_scheme}</td></tr>'
-                    f'<tr style="border:none; background:none;"><td style="padding:6px; font-weight:bold; color:#9ca3af; border:none;">DRAFT PICKS:</td><td style="padding:6px; font-weight:bold; text-align:right; border:none; color:white;">{draft}</td></tr>'
-                    f'<tr style="border:none; background:none;"><td style="padding:6px; font-weight:bold; color:#9ca3af; border:none;">TOP 5 CLASSES:</td><td style="padding:6px; font-weight:bold; text-align:right; border:none; color:white;">{t5rec}</td></tr>'
                     '</table></div>'
                 )
                 st.markdown(scheme_html, unsafe_allow_html=True)
 
             with details_r:
-                st.markdown("### 🏟️ Latest Game Box Score")
+                st.markdown("### 🏟️ Recent Game")
                 if not df_game_logs.empty:
                     gl_team_col = find_col(df_game_logs, "teamName") or find_col(df_game_logs, "team")
                     gl_year_col = find_col(df_game_logs, "seasonIndex") or find_col(df_game_logs, "year")
@@ -564,7 +631,7 @@ with tab_coach:
             st.markdown("<br>", unsafe_allow_html=True)
             
             # --- DIRECT TEAM_STATS DISPLAY SECTION ---
-            st.markdown("### 📊 Comprehensive Team Stats")
+            st.markdown("### 📊 Team Stats")
             if not df_team_stats.empty:
                 ts_team_col = find_col(df_team_stats, "teamName") or find_col(df_team_stats, "team")
                 ts_year_col = find_col(df_team_stats, "seasonIndex") or find_col(df_team_stats, "year")
@@ -603,7 +670,7 @@ with tab_coach:
 # TAB 3: 🛡️ TEAM OFFICE HUB (WITH SCHEDULES)
 # ==========================================
 with tab_team:
-    st.markdown("### 💰 NIL & Salary Cap Compliance Tracker")
+    st.markdown("### 💰 Dynasty Point Budget Overview")
      
     teams_found_list = set()
     if not df_roster.empty and find_col(df_roster, "team") in df_roster.columns:
@@ -616,7 +683,7 @@ with tab_team:
     teams_avail = sorted(list(teams_found_list))
     
     if teams_avail:
-        selected_team = st.selectbox("🛡️ SELECT PROGRAM", options=teams_avail)
+        selected_team = st.selectbox("🛡️ SELECT SCHOOL", options=teams_avail)
         st.markdown("<br>", unsafe_allow_html=True)
          
         # Fetch Financial NIL Data
@@ -645,20 +712,20 @@ with tab_team:
              
             kpi1, kpi2, kpi3 = st.columns(3)
             with kpi1:
-                st.markdown(f"<div class='stat-box' style='border-color:#3b82f6;'><p class='stat-val'>${total_budget:,.0f}K</p><p class='stat-lbl'>Total NIL Budget</p></div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='stat-box' style='border-color:#3b82f6;'><p class='stat-val'>{total_budget:,.0f}</p><p class='stat-lbl'>{selected_year} Dynasty Budget</p></div>", unsafe_allow_html=True)
             with kpi2:
-                st.markdown(f"<div class='stat-box' style='border-color:#ef4444;'><p class='stat-val'>${spent:,.0f}K</p><p class='stat-lbl'>Allocated Funds</p></div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='stat-box' style='border-color:#ef4444;'><p class='stat-val'>{spent:,.0f}</p><p class='stat-lbl'>Dynasty Points Used</p></div>", unsafe_allow_html=True)
             with kpi3:
-                st.markdown(f"<div class='stat-box' style='border-color:#10b981;'><p class='stat-val'>${unspent:,.0f}K</p><p class='stat-lbl'>Available Cap Space</p></div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='stat-box' style='border-color:#10b981;'><p class='stat-val'>{unspent:,.0f}</p><p class='stat-lbl'>Unspent</p></div>", unsafe_allow_html=True)
              
             st.markdown("<br>", unsafe_allow_html=True)
              
             ch1, ch2 = st.columns(2)
             with ch1:
-                st.markdown("<h5 style='text-align:center;'>Cap Space Overview</h5>", unsafe_allow_html=True)
+                st.markdown("<h5 style='text-align:center;'>Dynasty Point Overview</h5>", unsafe_allow_html=True)
                 fig1 = px.pie(
                     values=[spent, unspent], 
-                    names=['Allocated', 'Unspent Space'],
+                    names=['Used', 'Unspent'],
                     hole=0.6,
                     color_discrete_sequence=['#ef4444', '#10b981']
                 )
@@ -679,7 +746,7 @@ with tab_team:
                 fig2.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(t=10, b=10, l=10, r=10), showlegend=True, font=dict(color="white"))
                 st.plotly_chart(fig2, use_container_width=True)
 
-            st.markdown("##### 🏛️ Program Grades")
+            st.markdown("##### 🏛️ Fund Information")
             pg1, pg2, pg3, pg4 = st.columns(4)
             with pg1:
                 st.markdown(f"<div class='stat-box'><p class='stat-val' style='color:#f59e0b;'>{c_pres}</p><p class='stat-lbl'>Conf Prestige</p></div>", unsafe_allow_html=True)
@@ -713,7 +780,7 @@ with tab_team:
                             pass
                     
                     if not team_sched.empty:
-                        st.markdown("### 📅 Program Schedule")
+                        st.markdown("### 📅 Team Schedule")
                         sched_table_html = (
                             '<table class="clean-table">'
                             '<tr><th style="width:20%;">Week</th><th style="width:25%;">Location</th><th style="width:55%;">Opponent</th></tr>'
@@ -743,7 +810,7 @@ with tab_team:
             if not df_roster.empty and r_year_col and team_col:
                 team_roster = df_roster[(df_roster[r_year_col] == selected_year) & (df_roster[team_col] == selected_team)]
                 if not team_roster.empty:
-                    st.markdown("### 📋 Active Roster Ledger")
+                    st.markdown("### 📋 Roster")
                     nil_val_col = find_col(team_roster, "nil_value")
                     if nil_val_col:
                         team_roster = team_roster.sort_values(by=nil_val_col, ascending=False)
@@ -761,10 +828,10 @@ with tab_team:
         st.info("Program lists are empty across database tabs.")
 
 # ==========================================
-# TAB 4: 🏈 PLAYER STATS
+# TAB 4: 🏈 LEAGUE STATS
 # ==========================================
 with tab_stats:
-    st.markdown("### 🏈 Player Statistics Database")
+    st.markdown("### 🏈 Player Stats")
     stat_type = st.radio("Select Stat Category", ["Passing", "Rushing", "Receiving", "Defense"], horizontal=True)
     
     stat_map = {
@@ -789,12 +856,13 @@ with tab_stats:
         st.info(f"No {stat_type} stats uploaded yet.")
 
 # ==========================================
-# TAB 5: 📺 LEAGUE MEDIA CENTER
+# TAB 5: 📺 AROUND THE LEAGUE
 # ==========================================
 with tab_media:
-    col_poll, col_awards = st.columns([2, 1])
+    # --- ROW 1: Polls and Heisman ---
+    col1, col2 = st.columns([2, 1])
     
-    with col_poll:
+    with col1:
         st.markdown("### 📊 CFP National Top 25 Poll")
         year_col = find_col(df_top25, "year")
         rank_col = find_col(df_top25, "rank")
@@ -820,12 +888,12 @@ with tab_media:
                     )
                     st.markdown(poll_html, unsafe_allow_html=True)
             else:
-                st.info(f"No Top 25 ranking history logged for the {selected_year} season cycle yet.")
+                st.info(f"No Top 25 data for {selected_year}.")
         else:
             st.info("Top 25 sheet data is awaiting entries.")
 
-    with col_awards:
-        st.markdown("### 🏆 Heisman Trophy History")
+    with col2:
+        st.markdown(f"### 🏆 {selected_year} Heisman")
         year_col = find_col(df_heisman, "year")
         if not df_heisman.empty and year_col:
             year_heisman = df_heisman[df_heisman[year_col] == selected_year]
@@ -834,7 +902,6 @@ with tab_media:
                     name = str(get_val(row, "name", ""))
                     team = str(get_val(row, "team", ""))
                     pos = get_val(row, "pos", "")
-                    
                     team_logo = get_team_logo(team)
                     
                     heisman_html = (
@@ -849,23 +916,19 @@ with tab_media:
                     )
                     st.markdown(heisman_html, unsafe_allow_html=True)
             else:
-                st.info(f"No Heisman award winners recorded for the {selected_year} timeline segment.")
-        else:
-            st.info("Heisman history tab is awaiting entries.")
+                st.info("No Heisman winner recorded yet.")
 
-    # --- NEW UNFILTERED CHAMPIONSHIP HISTORY SECTION ---
+    # --- ROW 2: Championships ---
     st.markdown("<br><hr style='border-color:#2d3748;'><br>", unsafe_allow_html=True)
     
-    col_nat_champ, col_conf_champ = st.columns(2)
+    col3, col4 = st.columns(2)
     
-    with col_nat_champ:
+    with col3:
         st.markdown("### 🏆 National Championship History")
         if not df_nat_champ.empty:
             n_year_col = find_col(df_nat_champ, "year")
             if n_year_col:
-                # Deliberately NOT filtering by selected_year
                 hist_nc = df_nat_champ.sort_values(by=n_year_col, ascending=False)
-                
                 nc_html = '<div style="max-height:600px; overflow-y:auto; padding-right:8px;"><table class="clean-table" style="font-size:13px;">'
                 nc_html += '<tr><th style="width:10%;">Year</th><th style="width:40%;">Champion</th><th style="width:20%;">Result</th><th style="width:30%;">Runner-Up</th></tr>'
                 
@@ -874,63 +937,51 @@ with tab_media:
                     champ = str(get_val(row, "champion", ""))
                     opp = str(get_val(row, "opponent", ""))
                     res = get_val(row, "result", "")
-                    
-                    champ_logo = get_team_logo(champ)
-                    opp_logo = get_team_logo(opp)
-                    
                     nc_html += (
                         '<tr>'
                         f'<td><b>{yr}</b></td>'
-                        f'<td style="font-weight:900; color:#34d399;"><img src="{champ_logo}" width="24" style="vertical-align:middle; margin-right:8px;">{champ}</td>'
+                        f'<td style="font-weight:900; color:#34d399;"><img src="{get_team_logo(champ)}" width="20" style="margin-right:6px;">{champ}</td>'
                         f'<td style="font-weight:bold;">{res}</td>'
-                        f'<td style="color:#9ca3af;"><img src="{opp_logo}" width="20" style="vertical-align:middle; margin-right:6px; filter:grayscale(80%); opacity:0.8;">{opp}</td>'
+                        f'<td style="color:#9ca3af;"><img src="{get_team_logo(opp)}" width="16" style="margin-right:6px; filter:grayscale(80%); opacity:0.8;">{opp}</td>'
                         '</tr>'
                     )
                 nc_html += '</table></div>'
                 st.markdown(nc_html, unsafe_allow_html=True)
         else:
-            st.info("National Championship history data is empty.")
-            
-    with col_conf_champ:
+            st.info("No National Championship history.")
+
+    with col4:
         st.markdown("### 🏅 Conference Championship History")
         if not df_conf_champ.empty:
             c_year_col = find_col(df_conf_champ, "year")
             if c_year_col:
-                # Deliberately NOT filtering by selected_year
                 hist_cc = df_conf_champ.sort_values(by=c_year_col, ascending=False)
-                
                 cc_html = '<div style="max-height:600px; overflow-y:auto; padding-right:8px;"><table class="clean-table" style="font-size:13px;">'
-                cc_html += '<tr><th style="width:10%;">Year</th><th style="width:15%;">Conf</th><th style="width:35%;">Champion</th><th style="width:15%;">Result</th><th style="width:25%;">Runner-Up</th></tr>'
+                cc_html += '<tr><th style="width:10%;">Year</th><th style="width:15%;">Conf</th><th style="width:35%;">Champion</th><th style="width:15%;">Result</th></tr>'
                 
                 for _, row in hist_cc.iterrows():
                     yr = get_val(row, "year", "")
                     conf = str(get_val(row, "conference", "")).upper()
                     champ = str(get_val(row, "champion", ""))
-                    opp = str(get_val(row, "opponent", ""))
                     res = get_val(row, "result", "")
-                    
-                    champ_logo = get_team_logo(champ)
-                    opp_logo = get_team_logo(opp)
-                    
                     cc_html += (
                         '<tr>'
                         f'<td><b>{yr}</b></td>'
-                        f'<td style="color:#d97706; font-weight:800;">{conf}</td>'
-                        f'<td style="font-weight:bold; color:white;"><img src="{champ_logo}" width="20" style="vertical-align:middle; margin-right:6px;">{champ}</td>'
+                        f'<td style="color:#d97706; font-weight:800;"><img src="{get_conf_logo(conf)}" width="16" style="margin-right:6px;">{conf}</td>'
+                        f'<td style="font-weight:bold; color:white;"><img src="{get_team_logo(champ)}" width="16" style="margin-right:6px;">{champ}</td>'
                         f'<td style="font-weight:bold;">{res}</td>'
-                        f'<td style="color:#9ca3af;"><img src="{opp_logo}" width="16" style="vertical-align:middle; margin-right:6px; filter:grayscale(80%); opacity:0.8;">{opp}</td>'
                         '</tr>'
                     )
                 cc_html += '</table></div>'
                 st.markdown(cc_html, unsafe_allow_html=True)
         else:
-            st.info("Conference Championship history data is empty.")
+            st.info("No Conference Championship history.")
             
 # ==========================================
 # TAB 6: 📊 CONFERENCE STANDINGS
 # ==========================================
 with tab_standings:
-    st.markdown("### 🏛️ Conference Standings Leaderboard")
+    st.markdown("### 🏛️ Conference Standings")
     year_col = find_col(df_standings, "year")
     conf_col = find_col(df_standings, "conference")
     rank_col = find_col(df_standings, "rank")
@@ -941,7 +992,12 @@ with tab_standings:
             unique_conferences = year_standings[conf_col].dropna().unique()
             for conf in unique_conferences:
                 conf_df = year_standings[year_standings[conf_col] == conf].sort_values(by=rank_col)
-                st.markdown(f"#### 🏷️ {str(conf).upper()} Conference Standings")
+                
+                # Fetch the conference logo
+                conf_logo_url = get_conf_logo(conf)
+                
+                # Inject it into the header with HTML enabled
+                st.markdown(f"<h4 style='display:flex; align-items:center;'><img src='{conf_logo_url}' width='30' style='margin-right:10px;'> {str(conf).upper()} Conference Standings</h4>", unsafe_allow_html=True)
                 
                 conf_html = (
                     '<table class="clean-table">'
@@ -975,12 +1031,12 @@ with tab_standings:
             st.info(f"No conference data found matching the {selected_year} filter window.")
     else:
         st.info("Conference Standings data sheet is awaiting setup.")
-
+        
 # ==========================================
 # TAB 7: 🏆 PLAYOFF BRACKET
 # ==========================================
 with tab_bracket:
-    st.markdown("### 🏆 Playoff Bracket Matrix")
+    st.markdown(f"### <img src='{CFP_LOGO}' width='45' style='vertical-align:bottom; margin-right:8px;'> CFB Playoff Bracket", unsafe_allow_html=True)
     
     if not df_bracket.empty:
         year_bracket = df_bracket[df_bracket[find_col(df_bracket, "year")] == selected_year]
