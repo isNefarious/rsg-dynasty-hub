@@ -357,7 +357,7 @@ with head_l:
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-     else:
+    else:  
            st.markdown("""
             <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
                 THE CLIMB HUB
