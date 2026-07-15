@@ -895,12 +895,6 @@ with tab_media:
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-      else:  
-        st.markdown("""
-            <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
-                CFB Playoffs
-            </h1>
-        """, unsafe_allow_html=True)
         year_col = find_col(df_top25, "year")
         rank_col = find_col(df_top25, "rank")
         
