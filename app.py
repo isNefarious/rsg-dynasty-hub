@@ -1078,7 +1078,7 @@ with tab_bracket:
             </div>
         """, unsafe_allow_html=True)
     
-if not df_bracket.empty:
+        if not df_bracket.empty:
         year_bracket = df_bracket[df_bracket[find_col(df_bracket, "year")] == selected_year]
         
         if not year_bracket.empty:
