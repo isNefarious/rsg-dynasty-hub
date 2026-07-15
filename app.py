@@ -881,7 +881,7 @@ with tab_stats:
 # ==========================================
 # TAB 5: 📺 AROUND THE LEAGUE
 # ==========================================
-with tab_league:
+with tab_around:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
     top_25_url = get_custom_logo("TOP 25")
