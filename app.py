@@ -1067,7 +1067,8 @@ with tab_standings:
 # TAB 7: 🏆 PLAYOFF BRACKET
 # ==========================================
 cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
-    with tab_bracket:
+
+with tab_bracket:
       if cfb_playoff_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
                 <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
