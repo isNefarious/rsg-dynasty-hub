@@ -343,9 +343,13 @@ for df in [df_top25, df_heisman, df_standings, df_bracket, df_dynasty, df_coache
 all_years = sorted(list(years_found), reverse=True) if years_found else [2026]
 
 head_l, head_r = st.columns([8, 4])
+rsg_logo_url = get_custom_logo("RSG LOGO")
 with head_l:
+   if rsg_logo_url:
     st.markdown("""
-        <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px;'>RSG DYNASTY HUB</h1>
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 0;">
+                <img src="{rsg_logo_url}" width="55" style="object-fit: contain;">
+                <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px;'>RSG DYNASTY HUB</h1>
         <p style='color:#9ca3af; margin-top:2px; font-size:15px; font-weight:bold;'>The Climbs Signature App</p>
     """, unsafe_allow_html=True)
 with head_r:
