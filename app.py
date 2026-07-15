@@ -250,7 +250,7 @@ def get_team_logo(team_name):
         
         # MOUNTAIN WEST & PAC-12 SURVIVORS (14)
         "AIR FORCE": "2005", "BOISE STATE": "68", "COLORADO STATE": "36", "FRESNO STATE": "24",
-        "HAWAII": "62", "NEVADA": "2440", "UNLV": "2439", "NEW MEXICO": "167", 
+        "HAWAI'I": "62", "NEVADA": "2440", "UNLV": "2439", "NEW MEXICO": "167", 
         "SAN DIEGO STATE": "21", "SAN DIEGO ST": "21", "SAN DIEGO ST.": "21",
         "SAN JOSE STATE": "23", "UTAH STATE": "328", "WYOMING": "2751", "WASHINGTON STATE": "265", "OREGON STATE": "204","NORTH DAKOTA STATE": "2449", "NDSU": "2449",
         
