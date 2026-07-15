@@ -351,8 +351,8 @@ with head_l:
     if rsg_logo_url:
         st.markdown(f"""
             <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
-                <img src="{rsg_logo_url}" width="120" style="object-fit: contain;">
-                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 38px; line-height: 1.1;'>
+                <img src="{rsg_logo_url}" width="200" style="object-fit: contain;">
+                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 42px; line-height: 1.1;'>
                     RSG DYNASTY HUB
                 </h1>
             </div>
