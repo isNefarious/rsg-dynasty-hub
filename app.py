@@ -357,8 +357,8 @@ with head_l:
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
+     else:
+           st.markdown("""
             <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
                 THE CLIMB HUB
             </h1>
@@ -884,18 +884,18 @@ with tab_stats:
 with tab_media:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
-    cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
+    top_25_url = get_custom_logo("CFB PLAYOFF")
     
     with col1:
-      if cfb_playoff_url:
+      if top_25_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
-                <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
+                <img src="{top_25_url}" width="80" style="object-fit: contain;">
                 <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 32px; line-height: 1.1;'>
-                    CFB Playoffs
+                    AP Top 25
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-    else:
+      else:  
         st.markdown("""
             <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
                 CFB Playoffs
@@ -984,7 +984,7 @@ with tab_media:
                     )
                 nc_html += '</table></div>'
                 st.markdown(nc_html, unsafe_allow_html=True)
-        else:
+         else
             st.info("No National Championship history.")
 
     with col4:
