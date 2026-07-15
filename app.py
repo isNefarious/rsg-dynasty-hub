@@ -1067,10 +1067,10 @@ with tab_standings:
 # TAB 7: 🏆 PLAYOFF BRACKET
 # ==========================================
 with tab_bracket:
- 
- cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
+    
+    cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
 
-if cfb_playoff_url:
+    if cfb_playoff_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
                 <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
                 <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 32px; line-height: 1.1;'>
@@ -1078,8 +1078,8 @@ if cfb_playoff_url:
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-    
-if not df_bracket.empty:
+        
+    if not df_bracket.empty:
         year_bracket = df_bracket[df_bracket[find_col(df_bracket, "year")] == selected_year]
         
         if not year_bracket.empty:
