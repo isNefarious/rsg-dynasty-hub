@@ -28,11 +28,11 @@ def get_custom_logo(cust_name):
 # ==========================================
 # 1. APP INITIALIZATION & THEME INJECTION
 # ==========================================
-"RSG = get_custom_logo("RSG LOGO")
+rsg_logo = get_custom_logo("RSG LOGO")
 
 st.set_page_config(
     page_title="RSG Dynasty Hub",
-    page_icon="RSG",
+    page_icon=rsg_logo,
     layout="wide",
     initial_sidebar_state="collapsed"
 )
