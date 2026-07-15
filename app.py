@@ -343,15 +343,26 @@ for df in [df_top25, df_heisman, df_standings, df_bracket, df_dynasty, df_coache
 all_years = sorted(list(years_found), reverse=True) if years_found else [2026]
 
 head_l, head_r = st.columns([8, 4])
+# 1. Fetch the logo URL first (make sure this is called after your function is defined)
 rsg_logo_url = get_custom_logo("RSG LOGO")
+
+# 2. Render it inside your column
 with head_l:
-   if rsg_logo_url:
-    st.markdown("""
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 0;">
+    if rsg_logo_url:
+        st.markdown(f"""
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 0;">
                 <img src="{rsg_logo_url}" width="55" style="object-fit: contain;">
-                <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px;'>RSG DYNASTY HUB</h1>
-        <p style='color:#9ca3af; margin-top:2px; font-size:15px; font-weight:bold;'>The Climbs Signature App</p>
-    """, unsafe_allow_html=True)
+                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 38px; line-height: 1;'>
+                    RSG DYNASTY HUB
+                </h1>
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+            <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px;'>
+                RSG DYNASTY HUB
+            </h1>
+        """, unsafe_allow_html=True)
 with head_r:
     selected_year = st.selectbox("📅 SELECT A SEASON", options=all_years)
 
