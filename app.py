@@ -853,7 +853,7 @@ with tab_team:
 # ==========================================
 # TAB 4: 🏈 LEAGUE STATS
 # ==========================================
-with tab_stats:
+with tab_league_stats:
     st.markdown("### Player Stats")
     stat_type = st.radio("Select Stat Category", ["Passing", "Rushing", "Receiving", "Defense"], horizontal=True)
     
@@ -881,7 +881,7 @@ with tab_stats:
 # ==========================================
 # TAB 5: 📺 AROUND THE LEAGUE
 # ==========================================
-with tab_media:
+with tab_around_the_league:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
     top_25_url = get_custom_logo("TOP 25")
@@ -1011,7 +1011,7 @@ with tab_media:
 # ==========================================
 # TAB 6: 📊 CONFERENCE STANDINGS
 # ==========================================
-with tab_standings:
+with tab_conference_standings:
     st.markdown("### Conference Standings")
     year_col = find_col(df_standings, "year")
     conf_col = find_col(df_standings, "conference")
@@ -1068,7 +1068,7 @@ with tab_standings:
 # ==========================================
 cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
 
-with tab_bracket:
+with tab_cfb_playoff_bracket:
       if cfb_playoff_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
                 <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
@@ -1078,7 +1078,7 @@ with tab_bracket:
             </div>
         """, unsafe_allow_html=True)
     
-        if not df_bracket.empty:
+if not df_bracket.empty:
         year_bracket = df_bracket[df_bracket[find_col(df_bracket, "year")] == selected_year]
         
         if not year_bracket.empty:
