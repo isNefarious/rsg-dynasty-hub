@@ -881,7 +881,7 @@ with tab_stats:
 # ==========================================
 # TAB 5: 📺 AROUND THE LEAGUE
 # ==========================================
-with tab_around:
+with tab_media:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
     top_25_url = get_custom_logo("TOP 25")
@@ -1066,9 +1066,8 @@ with tab_standings:
 # ==========================================
 # TAB 7: 🏆 PLAYOFF BRACKET
 # ==========================================
-cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
-
-with tab_playoff:
+with tab_bracket:
+ cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
       if cfb_playoff_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
                 <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
