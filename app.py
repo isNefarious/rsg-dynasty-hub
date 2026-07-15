@@ -286,24 +286,23 @@ def get_conf_logo(conf_name):
         
     conf_clean = str(conf_name).strip().upper()
     
-    # Map your conference names to their logo URLs
-    # You can use direct web links or assets hosted in your GitHub repo!
+    # Map your conference names to their official ESPN ID URLs
     conf_map = {
-        "ACC": "https://a.espncdn.com/i/leagueslogos/college-football/500/acc.png",
-        "SEC": "https://a.espncdn.com/i/leagueslogos/college-football/500/sec.png",
-        "BIG 12": "https://a.espncdn.com/i/leagueslogos/college-football/500/big12.png",
-        "BIG-12": "https://a.espncdn.com/i/leagueslogos/college-football/500/big12.png",
-        "BIG TEN": "https://a.espncdn.com/i/leagueslogos/college-football/500/b10.png",
-        "BIG-10": "https://a.espncdn.com/i/leagueslogos/college-football/500/b10.png",
-        "MAC": "https://a.espncdn.com/i/leagueslogos/college-football/500/mac.png",
-        "MWC": "https://a.espncdn.com/i/leagueslogos/college-football/500/mwc.png",
-        "CUSA": "https://a.espncdn.com/i/leagueslogos/college-football/500/cusa.png",
-        "C-USA": "https://a.espncdn.com/i/leagueslogos/college-football/500/cusa.png",
-        "AMERICAN": "https://a.espncdn.com/i/leagueslogos/college-football/500/aac.png",
-        "AAC": "https://a.espncdn.com/i/leagueslogos/college-football/500/aac.png",
-        "SUN BELT": "https://a.espncdn.com/i/leagueslogos/college-football/500/sunbelt.png",
-        "PAC-12": "https://a.espncdn.com/i/leagueslogos/college-football/500/pac12.png",
-        "PAC12": "https://a.espncdn.com/i/leagueslogos/college-football/500/pac12.png",
+        "ACC": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/1.png",
+        "BIG 12": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/4.png",
+        "BIG-12": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/4.png",
+        "BIG TEN": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/5.png",
+        "BIG-10": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/5.png",
+        "SEC": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/8.png",
+        "PAC-12": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/9.png",
+        "PAC12": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/9.png",
+        "CUSA": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/12.png",
+        "C-USA": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/12.png",
+        "MAC": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/15.png",
+        "MWC": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/17.png",
+        "SUN BELT": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/37.png",
+        "AMERICAN": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/151.png",
+        "AAC": "https://a.espncdn.com/i/teamlogos/ncaa_conf/500/151.png",
         
         # Custom hosted league conference example:
         # "KINETIC CONF": "https://raw.githubusercontent.com/YourUsername/YourRepo/main/logos/kinetic_conf.png"
