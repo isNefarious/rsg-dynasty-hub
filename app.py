@@ -353,31 +353,31 @@ with head_l:
             <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
                 <img src="{rsg_logo_url}" width="200" style="object-fit: contain;">
                 <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 42px; line-height: 1.1;'>
-                    RSG DYNASTY HUB
+                    THE CLIMB HUB
                 </h1>
             </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown("""
             <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
-                RSG DYNASTY HUB
+                THE CLIMB HUB
             </h1>
         """, unsafe_allow_html=True)
 
 with head_r:
-    selected_year = st.selectbox("📅 SELECT A SEASON", options=all_years)
+    selected_year = st.selectbox("SELECT A SEASON", options=all_years)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Define Main Tabs
 tab_dynasty, tab_coach, tab_team, tab_stats, tab_media, tab_standings, tab_bracket = st.tabs([
-    "🏠 THE CLIMB DYNASTY SCORES",
-    "👔 COACH PORTAL",
-    "🛡️ TEAM OFFICE",
-    "🏈 LEAGUE STATS",
-    "📺 AROUND THE LEAGUE", 
-    "📊 CONFERENCE STANDINGS", 
-    "🏆 CFB PLAYOFF BRACKET"
+    "THE CLIMB DYNASTY SCORES",
+    "COACH PORTAL",
+    "TEAM OFFICE",
+    "LEAGUE STATS",
+    "AROUND THE LEAGUE", 
+    "CONFERENCE STANDINGS", 
+    "CFB PLAYOFF BRACKET"
 ])
 
 # ==========================================
@@ -424,7 +424,7 @@ with tab_dynasty:
              
     st.markdown("<br><hr style='border-color:#2d3748;'><br>", unsafe_allow_html=True)
 
-    st.markdown(f"### 📅 {selected_year} Dynasty Score")
+    st.markdown(f"### {selected_year} Dynasty Score")
     st.markdown("Track the prestige climb and performance for the currently selected season.")
      
     year_col = find_col(df_dynasty, "year")
@@ -479,7 +479,7 @@ with tab_coach:
          
         if coach_col and not coach_df_year.empty:
             coach_options = sorted(list(coach_df_year[coach_col].dropna().unique()))
-            selected_coach = st.selectbox("👔 SELECT HEAD COACH", options=coach_options, key="coach_sel")
+            selected_coach = st.selectbox("SELECT HEAD COACH", options=coach_options, key="coach_sel")
              
             coach_profile = coach_df_year[coach_df_year[coach_col] == selected_coach].iloc[0]
              
@@ -654,7 +654,7 @@ with tab_coach:
             st.markdown("<br>", unsafe_allow_html=True)
             
             # --- DIRECT TEAM_STATS DISPLAY SECTION ---
-            st.markdown("### 📊 Team Stats")
+            st.markdown("### Team Stats")
             if not df_team_stats.empty:
                 ts_team_col = find_col(df_team_stats, "teamName") or find_col(df_team_stats, "team")
                 ts_year_col = find_col(df_team_stats, "seasonIndex") or find_col(df_team_stats, "year")
@@ -693,7 +693,7 @@ with tab_coach:
 # TAB 3: 🛡️ TEAM OFFICE HUB (WITH SCHEDULES)
 # ==========================================
 with tab_team:
-    st.markdown("### 💰 Dynasty Point Budget Overview")
+    st.markdown("### Dynasty Point Budget Overview")
      
     teams_found_list = set()
     if not df_roster.empty and find_col(df_roster, "team") in df_roster.columns:
@@ -706,7 +706,7 @@ with tab_team:
     teams_avail = sorted(list(teams_found_list))
     
     if teams_avail:
-        selected_team = st.selectbox("🛡️ SELECT SCHOOL", options=teams_avail)
+        selected_team = st.selectbox("SELECT SCHOOL", options=teams_avail)
         st.markdown("<br>", unsafe_allow_html=True)
          
         # Fetch Financial NIL Data
@@ -715,7 +715,7 @@ with tab_team:
         team_nil = df_nil[(df_nil[n_year_col] == selected_year) & (df_nil[n_team_col] == selected_team)] if not df_nil.empty else pd.DataFrame()
          
         if not team_nil.empty:
-            st.markdown(f"#### 🏦 {str(selected_team).upper()} Financial Dashboard")
+            st.markdown(f"#### {str(selected_team).upper()} Financial Dashboard")
             nil_row = team_nil.iloc[0]
              
             total_budget = float(get_val(nil_row, 'totalbudget', 0))
@@ -769,7 +769,7 @@ with tab_team:
                 fig2.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(t=10, b=10, l=10, r=10), showlegend=True, font=dict(color="white"))
                 st.plotly_chart(fig2, use_container_width=True)
 
-            st.markdown("##### 🏛️ Fund Information")
+            st.markdown("##### Fund Information")
             pg1, pg2, pg3, pg4 = st.columns(4)
             with pg1:
                 st.markdown(f"<div class='stat-box'><p class='stat-val' style='color:#f59e0b;'>{c_pres}</p><p class='stat-lbl'>Conf Prestige</p></div>", unsafe_allow_html=True)
@@ -803,7 +803,7 @@ with tab_team:
                             pass
                     
                     if not team_sched.empty:
-                        st.markdown("### 📅 Team Schedule")
+                        st.markdown("### Team Schedule")
                         sched_table_html = (
                             '<table class="clean-table">'
                             '<tr><th style="width:20%;">Week</th><th style="width:25%;">Location</th><th style="width:55%;">Opponent</th></tr>'
@@ -814,7 +814,7 @@ with tab_team:
                             opp = get_val(s_row, "opponent")
                             
                             opp_logo = get_team_logo(opp) if str(opp).upper() != "BYE" else "https://a.espncdn.com/i/teamlogos/default-team-logo-500.png"
-                            loc_badge = "🏠 HOME" if str(loc).upper() == "HOME" else "✈️ AWAY" if str(loc).upper() == "AWAY" else "💤 BYE"
+                            loc_badge = "HOME" if str(loc).upper() == "HOME" else "AWAY" if str(loc).upper() == "AWAY" else "BYE"
                             opp_name_formatted = "BYE WEEK" if str(opp).upper() == "BYE" else str(opp).upper()
                             
                             sched_table_html += (
@@ -833,7 +833,7 @@ with tab_team:
             if not df_roster.empty and r_year_col and team_col:
                 team_roster = df_roster[(df_roster[r_year_col] == selected_year) & (df_roster[team_col] == selected_team)]
                 if not team_roster.empty:
-                    st.markdown("### 📋 Roster")
+                    st.markdown("### Roster")
                     nil_val_col = find_col(team_roster, "nil_value")
                     if nil_val_col:
                         team_roster = team_roster.sort_values(by=nil_val_col, ascending=False)
@@ -854,7 +854,7 @@ with tab_team:
 # TAB 4: 🏈 LEAGUE STATS
 # ==========================================
 with tab_stats:
-    st.markdown("### 🏈 Player Stats")
+    st.markdown("### Player Stats")
     stat_type = st.radio("Select Stat Category", ["Passing", "Rushing", "Receiving", "Defense"], horizontal=True)
     
     stat_map = {
@@ -884,9 +884,23 @@ with tab_stats:
 with tab_media:
     # --- ROW 1: Polls and Heisman ---
     col1, col2 = st.columns([2, 1])
+    cfb_playoff_url = get_custom_logo("CFB PLAYOFF")
     
     with col1:
-        st.markdown("### 📊 CFP National Top 25 Poll")
+      if cfb_playoff_url:
+        st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
+                <img src="{cfb_playoff_url}" width="80" style="object-fit: contain;">
+                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 32px; line-height: 1.1;'>
+                    CFB Playoffs
+                </h1>
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+            <h1 style='margin-bottom:0; font-weight:800; letter-spacing:-1px; font-size:38px; text-align: center;'>
+                CFB Playoffs
+            </h1>
+        """, unsafe_allow_html=True)
         year_col = find_col(df_top25, "year")
         rank_col = find_col(df_top25, "rank")
         
