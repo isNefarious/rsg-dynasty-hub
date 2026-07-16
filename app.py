@@ -889,8 +889,8 @@ with tab_media:
     with col1:
       if top_25_url:
         st.markdown(f""" <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 15px;">
-                <img src="{top_25_url}" width="80" style="object-fit: contain;">
-                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 32px; line-height: 1.1;'>
+                <img src="{top_25_url}" width="160" style="object-fit: contain;">
+                <h1 style='margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 38px; line-height: 1.1;'>
                     AP Top 25
                 </h1>
             </div>
