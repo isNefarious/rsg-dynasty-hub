@@ -236,7 +236,7 @@ def get_team_logo(team_name):
         "ARIZONA": "12", "ARIZONA STATE": "9",
         
         # MAC (13 - CFB 27 updates included)
-        "AKRON": "2006", "BALL STATE": "2050", "BOWLING GREEN": "189", "BUFFALO": "2084", "C. MICHIGAN": "2117",
+        "AKRON": "2006", "BALL STATE": "2050", "BOWLING GREEN": "189", "BGSU": "189", "BUFFALO": "2084", "C. MICHIGAN": "2117",
         "CENTRAL MICHIGAN": "2117", "E. MICHIGAN": "2199", "EASTERN MICHIGAN": "2199", "KENT STATE": "2309", "MIAMI (OH)": "193", "MIAMI UNIVERSITY": "193", 
         "NORTHERN ILLINOIS": "2459", "NIU": "2459", "OHIO": "195", "TOLEDO": "2649", "W. MICHIGAN": "2711", "WESTERN MICHIGAN": "2711",
         "UMASS": "113",
